@@ -1,427 +1,677 @@
-# Кроки для виконання
-1. Встановіть локально PostgreSQL, Maven та Java.
-1. Створіть базу даних college_db.
-1. Вкажіть правильне значення властивості `hibernate.connection.password` у файлі "src\main\resources\hibernate.cfg.xml".
-1. Зберіть програму за допомогою команди: `mvn clean install`.
-1. Запустіть програму за допомогою команди: `mvn exec:java -D"exec.mainClass=com.college.MainApp"`.
-1. Якщо термінал відображає знаки питання "?" замість українських символів, зконфігуруйте термінал на відображення шрифту в форматі UTF-8 виконавши команду `chcp 65001`.
+# База даних пекарні (bakery_bd)
 
-# Результати виконання програми
-```
-Oct 31, 2025 12:49:47 AM org.hibernate.Version logVersion
-INFO: HHH000412: Hibernate ORM core version 5.6.14.Final
-Oct 31, 2025 12:49:47 AM org.hibernate.boot.jaxb.internal.stax.LocalXmlResourceResolver resolveEntity
-WARN: HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
-Oct 31, 2025 12:49:48 AM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
-INFO: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-Oct 31, 2025 12:49:48 AM org.hibernate.engine.jdbc.connections.internal.ConnectionProviderInitiator instantiateC3p0Provider
-WARN: HHH000022: c3p0 properties were encountered, but the c3p0 provider class was not found on the classpath; these properties are going to be ignored.
-Oct 31, 2025 12:49:48 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
-WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
-Oct 31, 2025 12:49:48 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/college_db]
-Oct 31, 2025 12:49:48 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001001: Connection properties: {user=postgres, password=****}
-Oct 31, 2025 12:49:48 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001003: Autocommit mode: false
-Oct 31, 2025 12:49:48 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
-INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
-Oct 31, 2025 12:49:49 AM org.hibernate.dialect.Dialect <init>
-INFO: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+Клієнтський застосунок на Java з використанням Hibernate ORM та PostgreSQL.
+
+## Результати виконання програми
+
+```text
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.bakery:bakery_bd >------------------------
+[INFO] Building bakery-app 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- exec:3.7.0:java (default-cli) @ bakery_bd ---
 Hibernate: 
-
-    alter table class_schedules
-       drop constraint FKme1t7iugw17i8ye64yafbkpno
-Oct 31, 2025 12:49:50 AM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
-INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7248faa7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+    
+    alter table baking_materials 
+       drop constraint FK7t2gs44jix6sq9uua8ummcbsi
 Hibernate: 
-
-    alter table class_schedules
-       drop constraint FK2rlbqylwb07utwfushcbsv2an
-Hibernate:
-
-    alter table class_schedules
-       drop constraint FKjrtiswbp5lypa0jqhwtbfnlxc
+    
+    alter table baking_materials 
+       drop constraint FKbd3haqibcks05endvgttdug6j
 Hibernate: 
-
-    alter table courses
-       drop constraint FKsv2mdywju86wq12x4did4xd78
-Hibernate:
-
-    alter table enrollments
-       drop constraint FKho8mcicp4196ebpltdn9wl6co
-Hibernate:
-
-    alter table enrollments
-       drop constraint FK8kf1u1857xgo56xbfmnif2c51
+    
+    alter table bakings 
+       drop constraint FKqdo3wkwewitwpb0ooi1kkrht1
 Hibernate: 
-
-    alter table students
-       drop constraint FKalgc33nsolpmegw14o3h6g6rr
-Hibernate:
-
-    alter table teachers
-       drop constraint FKrgr03njnvpwuktc0mntf8t6o0
-Hibernate:
-
-    drop table if exists class_schedules cascade
+    
+    drop table if exists baking_materials cascade
 Hibernate: 
-
-    drop table if exists courses cascade
+    
+    drop table if exists bakings cascade
 Hibernate: 
-
-    drop table if exists departments cascade
+    
+    drop table if exists ovens cascade
 Hibernate: 
-
-    drop table if exists enrollments cascade
-Hibernate:
-
-    drop table if exists rooms cascade
-Hibernate:
-
-    drop table if exists students cascade
+    
+    drop table if exists raw_materials cascade
 Hibernate: 
-
-    drop table if exists teachers cascade
-Hibernate: 
-
-    create table class_schedules (
-       schedule_id  serial not null,
-        end_time time,
-        semester varchar(255),
-        start_time time,
-        year int4 not null,
-        course_id int4,
-        room_id int4,
-        teacher_id int4,
-        primary key (schedule_id)
-    )
-Oct 31, 2025 12:49:50 AM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
-INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@75bab420] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-Hibernate: 
-
-    create table courses (
-       course_id  serial not null,
-        course_name varchar(255),
-        credits int4 not null,
-        department_id int4,
-        primary key (course_id)
+    
+    create table baking_materials (
+       baking_number int4 not null,
+        material_name varchar(255) not null,
+        actual_quantity float4,
+        primary key (baking_number, material_name)
     )
 Hibernate: 
-
-    create table departments (
-       department_id  serial not null,
-        location varchar(255),
-        name varchar(255),
-        primary key (department_id)
+    
+    create table bakings (
+       baking_number int4 not null,
+        baking_date date,
+        product_name varchar(100),
+        oven_name varchar(100),
+        primary key (baking_number)
     )
 Hibernate: 
-
-    create table enrollments (
-       enrollment_id  serial not null,
-        enrollment_date date,
-        course_id int4,
-        student_id int4,
-        primary key (enrollment_id)
+    
+    create table ovens (
+       oven_name varchar(100) not null,
+        capicity_kg int4,
+        primary key (oven_name)
     )
 Hibernate: 
-
-    create table rooms (
-       room_id  serial not null,
-        capacity int4,
-        room_number varchar(255),
-        primary key (room_id)
+    
+    create table raw_materials (
+       material_name varchar(100) not null,
+        storage_conditions varchar(100),
+        unit_of_measure varchar(100),
+        primary key (material_name)
     )
 Hibernate: 
-
-    create table students (
-       student_id  serial not null,
-        first_name varchar(255),
-        last_name varchar(255),
-        department_id int4,
-        primary key (student_id)
-    )
+    
+    alter table baking_materials 
+       add constraint FK7t2gs44jix6sq9uua8ummcbsi 
+       foreign key (baking_number) 
+       references bakings
 Hibernate: 
-
-    create table teachers (
-       teacher_id  serial not null,
-        first_name varchar(255),
-        last_name varchar(255),
-        department_id int4,
-        primary key (teacher_id)
-    )
+    
+    alter table baking_materials 
+       add constraint FKbd3haqibcks05endvgttdug6j 
+       foreign key (material_name) 
+       references raw_materials
 Hibernate: 
-
-    alter table class_schedules
-       add constraint FKme1t7iugw17i8ye64yafbkpno
-       foreign key (course_id)
-       references courses
+    
+    alter table bakings 
+       add constraint FKqdo3wkwewitwpb0ooi1kkrht1 
+       foreign key (oven_name) 
+       references ovens
 Hibernate: 
-
-    alter table class_schedules
-       add constraint FK2rlbqylwb07utwfushcbsv2an
-       foreign key (room_id)
-       references rooms
-Hibernate:
-
-    alter table class_schedules
-       add constraint FKjrtiswbp5lypa0jqhwtbfnlxc
-       foreign key (teacher_id)
-       references teachers
-Hibernate:
-
-    alter table courses
-       add constraint FKsv2mdywju86wq12x4did4xd78
-       foreign key (department_id)
-       references departments
-Hibernate: 
-
-    alter table enrollments
-       add constraint FKho8mcicp4196ebpltdn9wl6co
-       foreign key (course_id)
-       references courses
-Hibernate:
-
-    alter table enrollments
-       add constraint FK8kf1u1857xgo56xbfmnif2c51
-       foreign key (student_id)
-       references students
-Hibernate: 
-
-    alter table students
-       add constraint FKalgc33nsolpmegw14o3h6g6rr
-       foreign key (department_id)
-       references departments
-Hibernate:
-
-    alter table teachers
-       add constraint FKrgr03njnvpwuktc0mntf8t6o0
-       foreign key (department_id)
-       references departments
-Hibernate: 
-    insert
+    insert 
     into
-        departments
-        (location, name)
+        ovens
+        (capicity_kg, oven_name) 
     values
         (?, ?)
 Hibernate: 
-    insert
+    insert 
     into
-        departments
-        (location, name)
-    values
-        (?, ?)
-Hibernate:
-    insert
-    into
-        teachers
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        teachers
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate: 
-    insert
-    into
-        students
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        students
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate: 
-    insert
-    into
-        students
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        students
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        students
-        (department_id, first_name, last_name)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        courses
-        (course_name, credits, department_id)
-    values
-        (?, ?, ?)
-Hibernate: 
-    insert
-    into
-        courses
-        (course_name, credits, department_id)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        rooms
-        (capacity, room_number)
+        ovens
+        (capicity_kg, oven_name) 
     values
         (?, ?)
 Hibernate: 
-    insert
+    insert 
     into
-        rooms
-        (capacity, room_number)
+        ovens
+        (capicity_kg, oven_name) 
     values
         (?, ?)
-Hibernate:
-    insert
-    into
-        class_schedules
-        (course_id, end_time, room_id, semester, start_time, teacher_id, year)    
-    values
-        (?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
-    insert
+    insert 
     into
-        class_schedules
-        (course_id, end_time, room_id, semester, start_time, teacher_id, year)    
-    values
-        (?, ?, ?, ?, ?, ?, ?)
-Hibernate:
-    insert
-    into
-        enrollments
-        (course_id, enrollment_date, student_id)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        enrollments
-        (course_id, enrollment_date, student_id)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        enrollments
-        (course_id, enrollment_date, student_id)
-    values
-        (?, ?, ?)
-Hibernate:
-    insert
-    into
-        enrollments
-        (course_id, enrollment_date, student_id)
+        raw_materials
+        (storage_conditions, unit_of_measure, material_name) 
     values
         (?, ?, ?)
 Hibernate: 
-    insert
+    insert 
     into
-        enrollments
-        (course_id, enrollment_date, student_id)
+        raw_materials
+        (storage_conditions, unit_of_measure, material_name) 
     values
         (?, ?, ?)
-Дані успішно збережено!
+Hibernate: 
+    insert 
+    into
+        raw_materials
+        (storage_conditions, unit_of_measure, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        raw_materials
+        (storage_conditions, unit_of_measure, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        raw_materials
+        (storage_conditions, unit_of_measure, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        raw_materials
+        (storage_conditions, unit_of_measure, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        bakings
+        (baking_date, oven_name, product_name, baking_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        baking_materials
+        (actual_quantity, baking_number, material_name) 
+    values
+        (?, ?, ?)
+Дані пекарні успішно збережено!
 Hibernate: 
     select
-        student1_.first_name as col_0_0_,
-        student1_.last_name as col_1_0_,
-        teacher4_.first_name as col_2_0_,
-        teacher4_.last_name as col_3_0_,
-        course2_.course_name as col_4_0_,
-        department5_.name as col_5_0_,
-        room6_.room_number as col_6_0_,
-        classsched3_.semester as col_7_0_,
-        classsched3_.year as col_8_0_,
-        classsched3_.start_time as col_9_0_,
-        classsched3_.end_time as col_10_0_
+        baking1_.baking_number as col_0_0_,
+        baking1_.baking_date as col_1_0_,
+        baking1_.product_name as col_2_0_,
+        oven2_.oven_name as col_3_0_,
+        oven2_.capicity_kg as col_4_0_,
+        rawmateria3_.material_name as col_5_0_,
+        rawmateria3_.unit_of_measure as col_6_0_,
+        rawmateria3_.storage_conditions as col_7_0_,
+        bakingmate0_.actual_quantity as col_8_0_ 
     from
-        enrollments enrollment0_
+        baking_materials bakingmate0_ 
     inner join
-        students student1_
-            on enrollment0_.student_id=student1_.student_id
+        bakings baking1_ 
+            on bakingmate0_.baking_number=baking1_.baking_number 
     inner join
-        courses course2_
-            on enrollment0_.course_id=course2_.course_id
+        ovens oven2_ 
+            on baking1_.oven_name=oven2_.oven_name 
     inner join
-        class_schedules classsched3_
-            on course2_.course_id=classsched3_.course_id
-    inner join
-        teachers teacher4_
-            on classsched3_.teacher_id=teacher4_.teacher_id
-    inner join
-        departments department5_
-            on course2_.department_id=department5_.department_id
-    inner join
-        rooms room6_
-            on classsched3_.room_id=room6_.room_id
-Студент: Аліса Мельник
-Викладач: Іван Петренко
-Курс: Вступ до програмування
-Кафедра: Комп`ютерні науки
-Аудиторія: 210
-Семестр: Осінь
-Рік: 2024
-Час початку: 09:00
-Час закінчення: 10:30
+        raw_materials rawmateria3_ 
+            on bakingmate0_.material_name=rawmateria3_.material_name 
+    order by
+        baking1_.baking_number ASC,
+        bakingmate0_.actual_quantity DESC
+Номер випікання: 2501
+Дата випікання: 2026-09-01
+Виріб: Житній хліб
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Борошно житнє
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 18.0
 --------------------------------------------------
-Студент: Катерина Левченко
-Викладач: Іван Петренко
-Курс: Вступ до програмування
-Кафедра: Комп`ютерні науки
-Аудиторія: 210
-Семестр: Осінь
-Рік: 2024
-Час початку: 09:00
-Час закінчення: 10:30
+Номер випікання: 2501
+Дата випікання: 2026-09-01
+Виріб: Житній хліб
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Дріжджі пресовані
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 1.0
 --------------------------------------------------
-Студент: Дмитро Шевченко
-Викладач: Іван Петренко
-Курс: Вступ до програмування
-Кафедра: Комп`ютерні науки
-Аудиторія: 210
-Семестр: Осінь
-Рік: 2024
-Час початку: 09:00
-Час закінчення: 10:30
+Номер випікання: 2502
+Дата випікання: 2026-09-01
+Виріб: Багет
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Борошно пшеничне
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 19.0
 --------------------------------------------------
-Студент: Богдан Іванов
-Викладач: Оксана Коваль
-Курс: Математичний аналіз I
-Кафедра: Математика
-Аудиторія: 212
-Семестр: Осінь
-Рік: 2024
-Час початку: 11:00
-Час закінчення: 12:30
+Номер випікання: 2502
+Дата випікання: 2026-09-01
+Виріб: Багет
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Дріжджі пресовані
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 1.15
 --------------------------------------------------
-Студент: Олена Петренко
-Викладач: Оксана Коваль
-Курс: Математичний аналіз I
-Кафедра: Математика
-Аудиторія: 212
-Семестр: Осінь
-Рік: 2024
-Час початку: 11:00
-Час закінчення: 12:30
+Номер випікання: 2503
+Дата випікання: 2026-09-02
+Виріб: Здобна булочка
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Борошно пшеничне
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 20.0
 --------------------------------------------------
-Oct 31, 2025 12:49:51 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PoolState stop
-INFO: HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/college_db]
+Номер випікання: 2503
+Дата випікання: 2026-09-02
+Виріб: Здобна булочка
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Масло вершкове
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 1.3
+--------------------------------------------------
+Номер випікання: 2504
+Дата випікання: 2026-09-02
+Виріб: Вівсяне печиво
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Пластівці вівсяні
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 21.0
+--------------------------------------------------
+Номер випікання: 2504
+Дата випікання: 2026-09-02
+Виріб: Вівсяне печиво
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Цукор
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 1.45
+--------------------------------------------------
+Номер випікання: 2505
+Дата випікання: 2026-09-03
+Виріб: Житній хліб
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Борошно житнє
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 22.0
+--------------------------------------------------
+Номер випікання: 2505
+Дата випікання: 2026-09-03
+Виріб: Житній хліб
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Дріжджі пресовані
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 1.6
+--------------------------------------------------
+Номер випікання: 2506
+Дата випікання: 2026-09-03
+Виріб: Багет
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Борошно пшеничне
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 23.0
+--------------------------------------------------
+Номер випікання: 2506
+Дата випікання: 2026-09-03
+Виріб: Багет
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Дріжджі пресовані
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 1.75
+--------------------------------------------------
+Номер випікання: 2507
+Дата випікання: 2026-09-04
+Виріб: Здобна булочка
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Борошно пшеничне
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 24.0
+--------------------------------------------------
+Номер випікання: 2507
+Дата випікання: 2026-09-04
+Виріб: Здобна булочка
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Масло вершкове
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 1.9
+--------------------------------------------------
+Номер випікання: 2508
+Дата випікання: 2026-09-04
+Виріб: Вівсяне печиво
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Пластівці вівсяні
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 25.0
+--------------------------------------------------
+Номер випікання: 2508
+Дата випікання: 2026-09-04
+Виріб: Вівсяне печиво
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Цукор
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 2.05
+--------------------------------------------------
+Номер випікання: 2509
+Дата випікання: 2026-09-05
+Виріб: Житній хліб
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Борошно житнє
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 26.0
+--------------------------------------------------
+Номер випікання: 2509
+Дата випікання: 2026-09-05
+Виріб: Житній хліб
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Дріжджі пресовані
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 2.2
+--------------------------------------------------
+Номер випікання: 2510
+Дата випікання: 2026-09-05
+Виріб: Багет
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Борошно пшеничне
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 27.0
+--------------------------------------------------
+Номер випікання: 2510
+Дата випікання: 2026-09-05
+Виріб: Багет
+Піч: Подова
+Місткість печі, кг: 80
+Сировина: Дріжджі пресовані
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 2.35
+--------------------------------------------------
+Номер випікання: 2511
+Дата випікання: 2026-09-06
+Виріб: Здобна булочка
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Борошно пшеничне
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 28.0
+--------------------------------------------------
+Номер випікання: 2511
+Дата випікання: 2026-09-06
+Виріб: Здобна булочка
+Піч: Ротаційна
+Місткість печі, кг: 120
+Сировина: Масло вершкове
+Одиниця виміру: кг
+Умови зберігання: Холодильник
+Фактична кількість: 2.5
+--------------------------------------------------
+Номер випікання: 2512
+Дата випікання: 2026-09-06
+Виріб: Вівсяне печиво
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Пластівці вівсяні
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 29.0
+--------------------------------------------------
+Номер випікання: 2512
+Дата випікання: 2026-09-06
+Виріб: Вівсяне печиво
+Піч: Конвекційна
+Місткість печі, кг: 40
+Сировина: Цукор
+Одиниця виміру: кг
+Умови зберігання: Сухе приміщення
+Фактична кількість: 2.65
+--------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.921 s
+[INFO] Finished at: 2026-11-25T15:12:36+02:00
+[INFO] ------------------------------------------------------------------------
 ```
